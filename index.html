@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <title>Grocery App With Firebase</title>
+</head>
+<body>
+
+    <div id="container">
+        <input type="text" id="txtGroceryCategory" placeholder="Add Grocery Category">
+        <button type="button" id="btnAddGroceryCategory">Add Grocery Category</button>
+    </div>
+    <div id="container">
+        <input type="text" id="txtGroceryItem" placeholder="Add Grocery Item">
+        <button type="button" id="btnAddGroceryItem">Add Grocery Item</button>
+    </div>
+
+    
+</body>
+
+<script src="apikey.js" type="text/javascript"></script>
+
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.5.4/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+
+<script src="https://www.gstatic.com/firebasejs/5.5.4/firebase-database.js"></script>
+
+<!-- Config and initialize Firebase -->
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: apiKey,
+    authDomain: "groceryapp-96e26.firebaseapp.com",
+    databaseURL: "https://groceryapp-96e26.firebaseio.com",
+    projectId: "groceryapp-96e26",
+    storageBucket: "groceryapp-96e26.appspot.com",
+    messagingSenderId: "490336012787"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="app.js" type="text/javascript"></script>
+</html>
+
+
+
