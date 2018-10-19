@@ -1,2 +1,5 @@
-##### w503-grocery-app-firebase
-Grocery app with Firebase
+###### w503-grocery-app-firebase
+
+### Repository Notes
+Grocery app using Firebase
+
