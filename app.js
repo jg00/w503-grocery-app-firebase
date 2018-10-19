@@ -3,7 +3,7 @@ const database = firebase.database();
 const categoriesRef = database.ref('categories');
 
 
-// Add categories
+// Add category
 $("#btnAddCategory").click(function() {
     let txtCategory = $("#txtCategory").val();
     let category = { title: txtCategory, zipCode: "77777"}
@@ -37,7 +37,7 @@ function addCategory(category) {
 }
 
 
-// Configure the value event generated from firebase database
+// Configure changes
 function configureObservers() {
 
     categoriesRef.on('value',function(snapshot){
@@ -46,8 +46,8 @@ function configureObservers() {
   
         snapshot.forEach(function(childSnapshot){
             categories.push(childSnapshot.val())
-    })
-  
+        })
+
         displayCategories(categories)
     })
   }
@@ -55,8 +55,9 @@ function configureObservers() {
 configureObservers()
 
 
+// Display all categories and items
 function displayCategories(categories) {
-
+  
     let liItem2 = ""
     let liItem3 = ""
     let liCombined = ""
@@ -66,45 +67,43 @@ function displayCategories(categories) {
         let category = key.title;
 
         liItem2 = ""
-        liItem2 = `<li>
-                        <span class="classCategory">${category}</span>
-                  </li>`
+        liItem2 = `<ul>
+                        <div class="divClassCategoryHeader">
+                            <p><span class="classCategory">${category}</span></p>
+                        </div>`
 
         liItem3 = ""
         for (let item in key.items) {
             
             let listItem = item;
-
-            liItem3 += `<ul id="ulItemParent">
-                            <li>
-                                <span class="classItem">${listItem}</span>
-                                <button type="button" onclick="removeItem(this)">Remove</button>
-                            </li>
-                        </ul>`
+                        
+            liItem3 += `<li class="liItem">
+                            <button type="button" onclick="removeItem(this)">Remove</button>
+                            <span class="classItem">${listItem}</span>
+                        </li>`
         }
 
-        liCombined += liItem2 + liItem3
+        liCombined += liItem2 + liItem3 + '</ul>'
     }
 
     ulList.innerHTML = liCombined;
 }
 
 
+// Add item
 $("#btnAddItem").click(function() {
     let txtCategory = $("#txtCategory").val();
     let txtItem = $("#txtItem").val();
-    
+
     let item = { title: txtItem, quantity: 5 }
     addGroceryItem(txtCategory, item) 
 });
 
 
-// Add item to category
 function addGroceryItem(txtCategory, item) {
 
     let itemsRef = categoriesRef.child(txtCategory).child("items")
     itemsRef.child(item.title).set(item)
-
     resetTextBoxes()
 }
 
@@ -116,12 +115,14 @@ function resetTextBoxes(){
 }
 
 
+// Remove item
 function removeItem(sender) {
 
-    // Section to try to remove item from database but in progress
-    let classCategory = $(sender).parent().parent().parent().find('.classCategory').text(); 
-    let itemCategory = $(sender).parent().find('.classItem').text(); // works
+    let classCategory = $(sender).parent().parent().find('.classCategory').text();
 
-    // REemove from front end
-    $(sender).parent().remove();
+    let itemCategory = $(sender).parent().find('.classItem').text();
+
+    let itemsRef = categoriesRef.child(classCategory).child("items")
+    itemsRef.child(itemCategory).remove()
 }
+
